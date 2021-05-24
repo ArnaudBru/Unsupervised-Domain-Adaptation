@@ -1,3 +1,5 @@
+import torch
+
 def accuracy(model, dataloader, verbose=False):
     correct = 0
     total = 0
