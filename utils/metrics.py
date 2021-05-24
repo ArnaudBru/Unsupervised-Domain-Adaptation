@@ -4,6 +4,8 @@ def accuracy(model, dataloader, verbose=False):
     correct = 0
     total = 0
 
+    device = next(model.parameters()).device
+
     with torch.no_grad():
         for data in dataloader:
             images, labels = data[0].to(device), data[1].to(device)
@@ -23,6 +25,8 @@ def class_accuracy(model, dataloader, classes, verbose=False):
     # prepare to count predictions for each class
     correct_pred = {classname: 0 for classname in classes}
     total_pred = {classname: 0 for classname in classes}
+
+    device = next(model.parameters()).device
 
     # again no gradients needed
     with torch.no_grad():
