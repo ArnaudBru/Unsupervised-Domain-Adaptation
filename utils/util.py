@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 def data_sample(dataloader, sample_size=5):
-  f, ax = plt.subplots(1,sample_size, figsize=(3*sample_size,3*sample_size))
+  f, ax = plt.subplots(1,sample_size, figsize=(2*sample_size,4))
 
   for batch_idx, (data, target) in enumerate(dataloader):
       size = data.size()[-2:]
