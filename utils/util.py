@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def show_sample(dataloader, sample_size=5):
+def data_sample(dataloader, sample_size=5):
   f, ax = plt.subplots(1,sample_size, figsize=(3*sample_size,3*sample_size))
 
   for batch_idx, (data, target) in enumerate(dataloader):
