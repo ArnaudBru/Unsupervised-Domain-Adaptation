@@ -80,3 +80,4 @@ class Discriminator(nn.Module):
         x = torch.cat([x, c], 1)
         out = self.model(x)
         return out.squeeze()
+        

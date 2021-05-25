@@ -45,3 +45,4 @@ def class_accuracy(model, dataloader, classes, verbose=False):
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
         print(f"Accuracy for class {classname} is: {accuracy:.1f}% ({total_pred[classname]} elements)")
+        

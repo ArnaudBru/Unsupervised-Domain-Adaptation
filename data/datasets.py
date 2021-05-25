@@ -22,3 +22,31 @@ def load_mnist(data_path, img_size=28, batch_size=32):
     mnist_loader_test = DataLoader(dataset=mnist_dataset_test, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=0)
 
     return mnist_loader_train, mnist_loader_test
+
+def load_svhn(data_path, img_size=28, batch_size=32):
+
+    svhn_dataset_train = SVHN(root=data_path, split='train',
+                        transform=transforms.Compose([transforms.ToTensor(),
+                                                      transforms.ToPILImage(),
+                                                      transforms.Resize((img_size, img_size)),
+                                                      transforms.Grayscale(num_output_channels=1),
+                                                      transforms.ToTensor(),
+                                                      transforms.Normalize(mean=[0.5], std=[0.5])
+                                                      ]),
+
+                        download=True)
+
+    svhn_dataset_test = SVHN(root=data_path, split='test',
+                        transform=transforms.Compose([transforms.ToTensor(),
+                                                      transforms.ToPILImage(),
+                                                      transforms.Resize((img_size, img_size)),
+                                                      transforms.Grayscale(num_output_channels=1),
+                                                      transforms.ToTensor(),
+                                                      transforms.Normalize(mean=[0.5], std=[0.5])
+                                                      ]),
+                        download=True)
+
+    svhn_loader_train = DataLoader(dataset=svhn_dataset_train, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=0)
+    svhn_loader_test = DataLoader(dataset=svhn_dataset_test, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=0)
+
+    return svhn_loader_train, svhn_loader_test
