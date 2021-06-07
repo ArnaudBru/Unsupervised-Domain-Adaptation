@@ -28,4 +28,22 @@ def generator_train_step(batch_size, discriminator, generator, g_optimizer, crit
     g_loss.backward()
     g_optimizer.step()
     return g_loss.item()
+
+def discriminator_train_step(batch_size, discriminator, generator, d_optimizer, criterion, real_images, labels, latent_dim, device, n_classes):
+    d_optimizer.zero_grad()
+
+    # train with real images
+    real_validity = discriminator(real_images, labels)
+    real_loss = criterion(real_validity, Variable(torch.ones(batch_size)).to(device))
     
+    # train with fake images
+    z = Variable(torch.randn(batch_size, latent_dim)).to(device)
+    fake_labels = Variable(torch.LongTensor(np.random.randint(0, n_classes, batch_size))).to(device)
+    fake_images = generator(z, fake_labels)
+    fake_validity = discriminator(fake_images, fake_labels)
+    fake_loss = criterion(fake_validity, Variable(torch.zeros(batch_size)).to(device))
+    
+    d_loss = real_loss + fake_loss
+    d_loss.backward()
+    d_optimizer.step()
+    return d_loss.item()
