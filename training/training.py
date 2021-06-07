@@ -1,4 +1,4 @@
-def classifier_train_step(batch_size, optimizer, criterion, images, labels):
+def classifier_train_step(classifieur, batch_size, optimizer, criterion, images, labels):
     optimizer.zero_grad()
     outputs = classifieur(inputs)
     loss = criterion(outputs, labels)
