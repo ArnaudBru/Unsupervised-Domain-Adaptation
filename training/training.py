@@ -12,8 +12,10 @@ def classifier_train_step(classifieur, inputs, optimizer, criterion, images, lab
     optimizer.step()
     return loss.item()
 
-def generator_train_step(batch_size, discriminator, generator, g_optimizer, criterion, latent_dim, device, labels=None, n_classes=None):
+def generator_train_step(batch_size, discriminator, generator, g_optimizer, criterion, latent_dim, labels=None, n_classes=None):
     g_optimizer.zero_grad()
+
+    device = next(generator.parameters()).device
 
     z = Variable(torch.randn(batch_size, latent_dim)).to(device)
     # If no labels are given we generate random labels
@@ -29,8 +31,10 @@ def generator_train_step(batch_size, discriminator, generator, g_optimizer, crit
     g_optimizer.step()
     return g_loss.item()
 
-def discriminator_train_step(batch_size, discriminator, generator, d_optimizer, criterion, real_images, labels, latent_dim, device, n_classes):
+def discriminator_train_step(batch_size, discriminator, generator, d_optimizer, criterion, real_images, labels, latent_dim, n_classes):
     d_optimizer.zero_grad()
+
+    device = next(generator.parameters()).device
 
     # train with real images
     real_validity = discriminator(real_images, labels)
