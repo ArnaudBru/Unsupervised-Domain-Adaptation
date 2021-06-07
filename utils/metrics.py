@@ -1,5 +1,6 @@
 import torch
 
+
 def accuracy(model, dataloader, verbose=False):
     correct = 0
     total = 0
@@ -17,9 +18,10 @@ def accuracy(model, dataloader, verbose=False):
             correct += (predicted == labels).sum().item()
 
     if verbose:
-      print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
+        print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
     else:
-      return correct/total
+        return correct/total
+
 
 def class_accuracy(model, dataloader, classes, verbose=False):
     # prepare to count predictions for each class
@@ -40,9 +42,7 @@ def class_accuracy(model, dataloader, classes, verbose=False):
                     correct_pred[classes[label]] += 1
                 total_pred[classes[label]] += 1
 
-
     # print accuracy for each class
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
         print(f"Accuracy for class {classname} is: {accuracy:.1f}% ({total_pred[classname]} elements)")
-        
