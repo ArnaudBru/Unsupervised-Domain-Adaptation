@@ -1,3 +1,6 @@
+"""
+Dataloader functions
+"""
 from torchvision.datasets import MNIST, SVHN
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -6,7 +9,17 @@ __all__ = ["load_mnist", "load_svhn"]
 
 
 def load_mnist(data_path, img_size=28, batch_size=32):
+    """Summary
 
+    Args:
+        data_path (str)
+        img_size (int, optional)
+        batch_size (int, optional)
+
+    Returns:
+        mnist_loader_train (DataLoader): DataLoader for MNIST Train set
+        mnist_loader_test (DataLoader): DataLoader for MNIST Test set
+    """
     mnist_dataset_train = MNIST(root=data_path, train=True,
                                 transform=transforms.Compose([transforms.ToTensor(),
                                                               transforms.Resize(
@@ -34,7 +47,17 @@ def load_mnist(data_path, img_size=28, batch_size=32):
 
 
 def load_svhn(data_path, img_size=28, batch_size=32):
+    """Summary
 
+    Args:
+        data_path (str)
+        img_size (int, optional)
+        batch_size (int, optional)
+
+    Returns:
+        svhn_loader_train (DataLoader): DataLoader for SVHN Train set
+        svhn_loader_test (DataLoader): DataLoader for SVHN Test set
+    """
     svhn_dataset_train = SVHN(root=data_path, split='train',
                               transform=transforms.Compose([transforms.ToTensor(),
                                                             transforms.ToPILImage(),
@@ -74,25 +97,31 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
     def data_sample(dataloader, sample_size=5):
-        f, ax = plt.subplots(1, sample_size, figsize=(2*sample_size, 4))
+        """Summary
 
-        for batch_idx, (data, target) in enumerate(dataloader):
+        Args:
+            dataloader (TYPE): Description
+            sample_size (int, optional): Description
+        """
+        _, axes = plt.subplots(1, sample_size, figsize=(2*sample_size, 4))
+
+        for (data, target) in dataloader:
             size = data.size()[-2:]
             for i, image in enumerate(data[:sample_size]):
-                ax[i].imshow(-1*image.reshape(size).numpy(), cmap='Greys')
-                ax[i].title.set_text(f'True Label: {target[i]}')
+                axes[i].imshow(-1*image.reshape(size).numpy(), cmap='Greys')
+                axes[i].title.set_text(f'True Label: {target[i]}')
             break
 
-    data_path = './results'
-    mnist_loader_train, mnist_loader_test = load_mnist(data_path)
-    svhn_loader_train, svhn_loader_test = load_svhn(data_path)
+    DATA_PATH = './results'
+    mnist_train, mnist_test = load_mnist(DATA_PATH)
+    svhn_train, svhn_test = load_svhn(DATA_PATH)
 
-    data_sample(mnist_loader_train)
+    data_sample(mnist_train)
     plt.suptitle('MNIST Train', fontsize=16)
-    data_sample(mnist_loader_test)
+    data_sample(mnist_test)
     plt.suptitle('MNIST Test', fontsize=16)
-    data_sample(svhn_loader_train)
+    data_sample(svhn_train)
     plt.suptitle('SVHN Train', fontsize=16)
-    data_sample(svhn_loader_test)
+    data_sample(svhn_test)
     plt.suptitle('SVHN Test', fontsize=16)
     plt.show()
