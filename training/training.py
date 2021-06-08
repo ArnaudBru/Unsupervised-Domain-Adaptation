@@ -69,27 +69,26 @@ def generator_train_step(discriminator, generator, g_optimizer, criterion,
     return g_loss.item()
 
 
-def discriminator_train_step(discriminator, generator, d_optimizer, criterion, real_images, labels,
-                             batch_size, latent_dim, n_classes):
-    """Summary
-
+def discriminator_train_step(discriminator, generator, d_optimizer, criterion,
+                             real_images, labels, latent_dim, n_classes):
+    """
     Args:
-        discriminator (TYPE)
-        generator (TYPE)
-        d_optimizer (TYPE)
-        criterion (TYPE)
-        real_images (TYPE)
-        labels (TYPE)
-        batch_size (int)
-        latent_dim (int)
-        n_classes (int)
-
+        discriminator (TYPE): 
+        generator (TYPE): 
+        d_optimizer (TYPE): 
+        criterion (TYPE): 
+        real_images (TYPE): 
+        labels (TYPE): 
+        latent_dim (int): 
+        n_classes (int): 
+    
     Returns:
         TYPE: loss value
     """
     d_optimizer.zero_grad()
 
     device = next(generator.parameters()).device
+    batch_size = len(real_images)
 
     # train with real images
     real_validity = discriminator(real_images, labels)
