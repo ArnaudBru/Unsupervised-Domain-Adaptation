@@ -112,7 +112,7 @@ if __name__ == "__main__":
                 axes[i].title.set_text(f'True Label: {target[i]}')
             break
 
-    DATA_PATH = './results'
+    DATA_PATH = './datasets'
     mnist_train, mnist_test = load_mnist(DATA_PATH)
     svhn_train, svhn_test = load_svhn(DATA_PATH)
 
