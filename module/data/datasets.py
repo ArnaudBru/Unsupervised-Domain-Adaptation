@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     from module.data.datasets import data_sample
 
-    DATA_PATH = './datasets'
+    DATA_PATH = '../datasets'
     mnist_train, mnist_test = load_mnist(DATA_PATH)
     svhn_train, svhn_test = load_svhn(DATA_PATH)
 
