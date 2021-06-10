@@ -27,15 +27,14 @@ def cls_pretraining(classifier, loader_train, loader_test, learning_rate, n_epoc
     """
 
     # Pretraining paths
-    pretraining_path = ''.join([results_path, '/pretraining'])
-    cls_pretrained_path = ''.join([pretraining_path, '/cls_pretrained.pth'])
+    cls_pretrained_path = ''.join([results_path, '/cls_pretrained.pth'])
 
     device = next(classifier.parameters()).device
 
     criterion = nn.CrossEntropyLoss().to(device)
     optimizer = optim.Adam(classifier.parameters(), lr=learning_rate)
 
-    os.makedirs(pretraining_path, exist_ok=True)
+    os.makedirs(results_path, exist_ok=True)
 
     if os.path.isfile(cls_pretrained_path):
         classifier.load_state_dict(torch.load(cls_pretrained_path))
@@ -43,15 +42,11 @@ def cls_pretraining(classifier, loader_train, loader_test, learning_rate, n_epoc
 
     else:
         for epoch in range(n_epochs):  # loop over the dataset multiple times
-
             running_loss = 0.0
+
             for inputs, labels in loader_train:
-
-                # data to gpu
                 inputs, labels = inputs.to(device), labels.to(device)
-
                 loss = classifier_train_step(classifier, inputs, optimizer, criterion, labels)
-
                 running_loss += loss
 
             print(f'Epoch: {epoch} || loss: {running_loss}')
