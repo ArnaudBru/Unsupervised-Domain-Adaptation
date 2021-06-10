@@ -96,21 +96,7 @@ def load_svhn(data_path, img_size=28, batch_size=32):
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    def data_sample(dataloader, sample_size=5):
-        """Summary
-
-        Args:
-            dataloader (TYPE): Description
-            sample_size (int, optional): Description
-        """
-        _, axes = plt.subplots(1, sample_size, figsize=(2*sample_size, 4))
-
-        for (data, target) in dataloader:
-            size = data.size()[-2:]
-            for i, image in enumerate(data[:sample_size]):
-                axes[i].imshow(-1*image.reshape(size).numpy(), cmap='Greys')
-                axes[i].title.set_text(f'True Label: {target[i]}')
-            break
+    from module.data.datasets import data_sample
 
     DATA_PATH = './datasets'
     mnist_train, mnist_test = load_mnist(DATA_PATH)
