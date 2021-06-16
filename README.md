@@ -2,6 +2,12 @@
 
  [Pytorch](https://www.pytorch.org) Implementation of Unsupervised Domain Adaptation using Generative Pseudo-label Refinement[[1]](https://arxiv.org/pdf/2001.02950.pdf)
 
+## Domains
+
+ Source Dataset: [SVHN](http://ufldl.stanford.edu/housenumbers/)
+
+ Target Dataset: [MNIST](https://en.wikipedia.org/wiki/MNIST_database)
+
 ## Set-up
 
 ### PC
