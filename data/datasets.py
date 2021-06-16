@@ -96,7 +96,7 @@ def load_svhn(data_path, img_size=28, batch_size=32):
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    from module.data.datasets import data_sample
+    from data.datasets import data_sample
 
     DATA_PATH = '../datasets'
     mnist_train, mnist_test = load_mnist(DATA_PATH)

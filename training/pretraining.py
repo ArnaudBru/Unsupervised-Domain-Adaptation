@@ -12,8 +12,8 @@ import torch.optim as optim
 
 from torchvision.utils import save_image
 
-from module.training.training_step import classifier_train_step, generator_train_step, discriminator_train_step
-from module.util.metrics import accuracy
+from training.training_step import classifier_train_step, generator_train_step, discriminator_train_step
+from util.metrics import accuracy
 
 
 def cls_pretraining(classifier, loader_train, loader_test, learning_rate, n_epochs, results_path):
