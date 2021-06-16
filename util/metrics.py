@@ -18,7 +18,7 @@ def accuracy(model, dataloader, verbose=False):
             correct += (predicted == labels).sum().item()
 
     if verbose:
-        print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
+        print('Accuracy of the network: %d %%' % (100 * correct / total))
     else:
         return correct/total
 
@@ -46,3 +46,4 @@ def class_accuracy(model, dataloader, classes, verbose=False):
     for classname, correct_count in correct_pred.items():
         accuracy = 100 * float(correct_count) / total_pred[classname]
         print(f"Accuracy for class {classname} is: {accuracy:.1f}% ({total_pred[classname]} elements)")
+    print('\n')

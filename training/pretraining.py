@@ -46,6 +46,7 @@ def cls_pretraining(classifier, loader_train, loader_test, learning_rate, n_epoc
         print('loaded existing model')
 
     else:
+        print('Starting Training classifier')
         for epoch in range(n_epochs):  # loop over the dataset multiple times
             running_loss = 0.0
 
@@ -57,9 +58,9 @@ def cls_pretraining(classifier, loader_train, loader_test, learning_rate, n_epoc
             print(f'Epoch: {epoch} || loss: {running_loss}')
             if (epoch + 1) % 10 == 0:
                 print(f'Test accuracy: {100*accuracy(classifier, loader_test):.2f}%')
+        print('Finished Training classifier')
+        print('\n')
 
-    print('Finished Training')
-    print('\n')
     print('Results:')
     print(f'Test accuracy: {100*accuracy(classifier, loader_test):.2f}%')
     torch.save(classifier.state_dict(), cls_pretrained_path)
@@ -116,6 +117,7 @@ def gan_pretraining(generator, discriminator, classifier, loader_train,
         loaded_dis = True
 
     if not(loaded_gen and loaded_dis):
+        print('Starting Training GAN')
         for epoch in range(n_epochs):
             print(f'Starting epoch {epoch}/{n_epochs}...', end=' ')
             g_loss_list = []
@@ -146,5 +148,8 @@ def gan_pretraining(generator, discriminator, classifier, loader_train,
             torch.save(discriminator.state_dict(), models_pretraining_path + f'/{epoch:02d}_dis.pth')
 
             print(f"[D loss: {np.mean(d_loss_list)}] [G loss: {np.mean(g_loss_list)}]")
+        print('Finished Training GAN')
+        print('\n')
+
 
     return generator, discriminator
