@@ -73,7 +73,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 N_CLASSES = 10
 
 # Parameters classifier pretraining
-N_EPOCHS_CLS_PRETRAINING = 2  # 5
+N_EPOCHS_CLS_PRETRAINING = 25
 # Learning rate classifier pretraining
 LR_CLS_PRETRAINING = 1e-4
 
@@ -84,7 +84,7 @@ LR_D_PRETRAINING = 1e-4
 # Learning rate generator pretraining
 LR_G_PRETRAINING = 1e-4
 # Parameters classifier pretraining
-N_EPOCHS_GAN_PRETRAINING = 3  # 0
+N_EPOCHS_GAN_PRETRAINING = 30
 
 # Learning rate classifier pretraining
 LR_CLS_TRAINING = 1e-4
@@ -93,7 +93,7 @@ LR_D_TRAINING = 1e-4
 # Learning rate generator training
 LR_G_TRAINING = 1e-4
 # Parameters classifier training
-N_EPOCHS_TRAINING = 3  # 0
+N_EPOCHS_TRAINING = 30
 
 # Results
 RESULTS_PATH = './results'
