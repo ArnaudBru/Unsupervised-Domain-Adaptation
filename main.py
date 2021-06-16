@@ -8,7 +8,7 @@ https://github.com/ArnaudBru
 
 Attributes:
     BATCH_SIZE (int):
-    classifieur (TYPE):
+    classifier (TYPE):
     cls_criterion (TYPE):
     cls_optimizer (TYPE):
     d_optimizer (TYPE):
@@ -120,19 +120,19 @@ svhn_loader_train, svhn_loader_test = load_svhn(DATA_PATH, IMG_SIZE, BATCH_SIZE)
 # --------------------
 
 # Classifier pretraining on source data
-classifieur = ConvNet(classes=N_CLASSES).to(DEVICE)
-classifieur = cls_pretraining(classifieur, svhn_loader_train, svhn_loader_test,
+classifier = ConvNet(classes=N_CLASSES).to(DEVICE)
+classifier = cls_pretraining(classifier, svhn_loader_train, svhn_loader_test,
                               LR_CLS_PRETRAINING, N_EPOCHS_CLS_PRETRAINING, PRETRAINING_PATH)
 
 if VERBOSE:
-    class_accuracy(classifieur, svhn_loader_test, list(range(N_CLASSES)))
+    class_accuracy(classifier, svhn_loader_test, list(range(N_CLASSES)))
 
 # GAN pretraining on target data annotated by classifier
 generator = Generator(N_CLASSES, LATENT_DIM, IMG_SIZE).to(DEVICE)
 discriminator = Discriminator(N_CLASSES, IMG_SIZE).to(DEVICE)
 
 generator, discriminator = gan_pretraining(generator, discriminator,
-                                           classifieur, mnist_loader,
+                                           classifier, mnist_loader,
                                            LR_G_PRETRAINING, LR_D_PRETRAINING,
                                            LATENT_DIM, N_CLASSES,
                                            N_EPOCHS_GAN_PRETRAINING,
@@ -142,8 +142,8 @@ if VERBOSE:
     generated_sample(generator, N_CLASSES, LATENT_DIM, IMG_SIZE)
 
     print('Baseline Algorithm')
-    print(f'Test accuracy: {100*accuracy(classifieur, mnist_loader_test):.2f}%')
-    class_accuracy(classifieur, mnist_loader_test, list(range(N_CLASSES)))
+    print(f'Test accuracy: {100*accuracy(classifier, mnist_loader_test):.2f}%')
+    class_accuracy(classifier, mnist_loader_test, list(range(N_CLASSES)))
 
 
 # --------------------
@@ -153,7 +153,7 @@ if VERBOSE:
 
 # Classifier loss and optimizer
 cls_criterion = nn.CrossEntropyLoss().to(DEVICE)
-cls_optimizer = optim.Adam(classifieur.parameters(), lr=LR_CLS_TRAINING)
+cls_optimizer = optim.Adam(classifier.parameters(), lr=LR_CLS_TRAINING)
 
 # GAN loss and optimizers
 gan_criterion = nn.BCELoss().to(DEVICE)
@@ -186,7 +186,7 @@ for epoch in range(N_EPOCHS_TRAINING):
 
         # Step 5
         # Update classifier
-        c_loss = classifier_train_step(classifieur, fake_images, cls_optimizer, cls_criterion, fake_labels)
+        c_loss = classifier_train_step(classifier, fake_images, cls_optimizer, cls_criterion, fake_labels)
         c_loss_list.append(c_loss)
 
         # Step 6
@@ -195,7 +195,7 @@ for epoch in range(N_EPOCHS_TRAINING):
 
         # Step 7
         # Infer labels using classifier
-        _, labels_classifier = torch.max(classifieur(real_images), dim=1)
+        _, labels_classifier = torch.max(classifier(real_images), dim=1)
 
         # Step 8
         # Update discriminator
@@ -216,7 +216,7 @@ for epoch in range(N_EPOCHS_TRAINING):
 
     gen_imgs = generator(z, gen_labels).view(-1, 1, IMG_SIZE, IMG_SIZE)
     save_image(gen_imgs.data, IMG_TRAINING_PATH + f'/epoch_{epoch:02d}.png', nrow=N_CLASSES, normalize=True)
-    torch.save(classifieur.state_dict(), MODELS_TRAINING_PATH + f'/{epoch:02d}_cls.pth')
+    torch.save(classifier.state_dict(), MODELS_TRAINING_PATH + f'/{epoch:02d}_cls.pth')
     torch.save(generator.state_dict(), MODELS_TRAINING_PATH + f'/{epoch:02d}_gen.pth')
     torch.save(discriminator.state_dict(), MODELS_TRAINING_PATH + f'/{epoch:02d}_dis.pth')
 
@@ -230,7 +230,7 @@ print('\n')
 # --------------------
 
 
-print(f'MNIST accuracy: {100*accuracy(classifieur, mnist_loader_test):.2f}%')
-class_accuracy(classifieur, mnist_loader_test, list(range(N_CLASSES)))
+print(f'MNIST accuracy: {100*accuracy(classifier, mnist_loader_test):.2f}%')
+class_accuracy(classifier, mnist_loader_test, list(range(N_CLASSES)))
 if VERBOSE:
     generated_sample(generator, N_CLASSES, LATENT_DIM, IMG_SIZE)
