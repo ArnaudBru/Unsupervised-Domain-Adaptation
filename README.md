@@ -1,6 +1,6 @@
 # Generative Pseudo-label Refinement for Unsupervised Domain Adaptation[[1]](https://arxiv.org/pdf/2001.02950.pdf)
 
- [Pytorch](https://www.pytorch.org) Implementation of Generative Pseudo-label Refinement for Unsupervised Domain Adaptation[[1]](https://arxiv.org/pdf/2001.02950.pdf)
+ [Pytorch](https://www.pytorch.org) Implementation of Unsupervised Domain Adaptation using Generative Pseudo-label Refinement[[1]](https://arxiv.org/pdf/2001.02950.pdf)
 
 ## Set-up
 
