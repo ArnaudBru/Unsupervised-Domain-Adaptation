@@ -4,6 +4,16 @@
 
 ## Set-up
 
+### PC
+
+ - Clone repo
+
+```git clone https://github.com/ArnaudBru/Generative-Pseudo-label-Refinement-for-Unsupervised-Domain-Adaptation pseudolabel```
+
+ - Install requirements
+ 
+ ```pip install -r requirements.txt```
+
 ### Colab Notebook (.ipynb)
 
 Paste the following code in a cell:
@@ -16,15 +26,3 @@ Paste the following code in a cell:
 % cd "/content/pseudolabel"
 !python main.py
 ```
-
-### PC
-
- - Clone repo
-
-```git clone https://github.com/ArnaudBru/Generative-Pseudo-label-Refinement-for-Unsupervised-Domain-Adaptation pseudolabel```
-
- - Install requirements
- 
- ```pip install -r requirements.txt```
-
-
